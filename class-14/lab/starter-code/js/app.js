@@ -6,23 +6,27 @@ var Cart = function(items) {
   this.items = items;
 };
 var allClicked = [];
-Cart.allClicked = JSON.parse(localStorage.getItem('cart')) || [];
+allClicked = JSON.parse(localStorage.getItem('cart')) || [];
 
 Cart.prototype.addItem = function(position, quantity) {
   this.items = [Product.allProducts[position].name,quantity];
-  Cart.allClicked.push(this.items)
-
-  console.log(this)
+  allClicked.push(this.items)
 };
 
 Cart.prototype.saveToLocalStorage = function() {
-  localStorage.setItem('cart', JSON.stringify(Cart.allClicked));
-  console.log(Cart.allClicked)
+  localStorage.removeItem('cart');
+  localStorage.setItem('cart', JSON.stringify(allClicked));
 };
 
 Cart.prototype.removeItem = function(item) {
   // TODO: Fill in this instance method to remove one item from the cart. 
   this.items.splice(item,1,'');
+  var filtered = this.items.filter(function (el) {
+    return el != '';
+  });
+  allClicked = filtered;
+  cart.saveToLocalStorage();
+
   // Note: You will have to decide what kind of parameter to pass in here!
 };
 
@@ -62,7 +66,6 @@ function generateCatalog() {
   new Product('assets/usb.gif', 'USB');
   new Product('assets/water-can.jpg', 'Water Can');
   new Product('assets/wine-glass.jpg', 'Wine Glass');
-  console.log(Product.allProducts[1])
 }
 
 // Initialize the app by creating the big list of products with images and names

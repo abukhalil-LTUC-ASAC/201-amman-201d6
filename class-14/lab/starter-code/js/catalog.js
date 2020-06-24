@@ -4,11 +4,13 @@
 
 // Set up an empty cart for use on this page.
 var cart = new Cart([]);
-var click = 0;
+
+var click = parseInt(localStorage.getItem('click')) || 0;
 // On screen load, we call this method to put all of the busmall options
 // (the things in the Product.allProducts array) into the drop down list.
 function populateForm() {
-
+  updateCounter(event);
+  updateCartPreview()
   //TODO: Add an <option> tag inside the form's select for each product
   var selectElement = document.getElementById('items');
   var options = '';
@@ -27,11 +29,10 @@ function handleSubmit(event) {
   // TODO: Prevent the page from reloading
   event.preventDefault();
   // Do all the things ...
-
   addSelectedItemToCart(event);
   cart.saveToLocalStorage();
-  updateCounter();
-  updateCartPreview(event);
+  updateCounter(event);
+  updateCartPreview();
 
 }
 
@@ -45,18 +46,18 @@ function addSelectedItemToCart(event) {
 
   // TODO: using those, add one item to the Cart
   cart.addItem(selectedItem, itemQuantity);
-
-
-  console.log(cart);
-  console.log(Product.allProducts);  
-
 }
 
 // TODO: Update the cart count in the header nav with the number of items in the Cart
-function updateCounter() {
-  click += 1
-  var HTMLcount = document.getElementById("itemCount");
-  HTMLcount.innerHTML = click
+function updateCounter(event) {
+  if (event) {
+    click += 1
+    
+    localStorage.setItem('click',click);
+    }
+    var HTMLcount = document.getElementById("itemCount");
+    HTMLcount.innerHTML = click;
+
 }
 
 // TODO: As you add items into the cart, show them (item & quantity) in the cart preview div
@@ -64,8 +65,18 @@ function updateCartPreview(event) {
   // TODO: Get the item and quantity from the form
   // TODO: Add a new element to the cartContents div with that information
   var HTMLcontent = document.getElementById("cartContents");
-  HTMLcontent.innerHTML += '<div>' + Product.allProducts[event.target[1].value].name + '</div>' 
-  + '<div>' + event.target[2].value + '</div><br>'
+  HTMLcontent.innerHTML = ''
+  if (!event) {
+    console.log(allClicked.length)
+    for (var i = 0; i < allClicked.length; i++){
+      HTMLcontent.innerHTML += '<div>Item: ' + allClicked[i][0] + '</div>' 
+      + '<div>Quantity: ' + allClicked[i][1] + '</div><br>'
+    }
+  } else {
+      HTMLcontent.innerHTML += '<div>' + Product.allProducts[event.target[1].value].name + '</div>' 
+      + '<div>' + event.target[2].value + '</div><br>'
+  }
+
 }
 
 // Set up the "submit" event listener on the form.

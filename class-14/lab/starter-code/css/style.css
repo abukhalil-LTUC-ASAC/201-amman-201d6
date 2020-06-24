@@ -1,2 +1,50 @@
 /* TODO: Make it awesome */
-/* h */
+body > header, body > header > h1, nav, footer p {
+display: inline-flex;
+justify-content: center;
+background-color: black;
+color: white;
+width: 100%;
+align-self: center;
+}
+body > header {
+box-shadow: 1px -5px 4px 8px grey;
+}
+
+body nav, nav > ul {
+  margin: 10px 0;
+  display: inline-flex;
+}
+nav a {
+  background-color: #555;
+  color: white;
+  text-decoration: none;
+  padding: 10px 26px;
+  position: relative;
+  display: inline-block;
+  border-radius: 2px;
+  margin: 0 10px;
+}
+nav span {
+  position: relative;
+  top: -15px;
+  right: 30px;
+  padding: 5px 10px;
+  border-radius: 50%;
+  background: red;
+  color: white;
+}
+
+footer {
+  background-image: url('https://wordlesstech.com/wp-content/uploads/2011/12/New-Bus-for-London-8.jpg');
+  height: 200px;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  background-position: center;
+}
+footer p {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+}

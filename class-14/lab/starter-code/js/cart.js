@@ -6,6 +6,8 @@ var HTMLcount = document.getElementById("itemCount");
 
 // Create an event listener so that when the delete link is clicked, the removeItemFromCart method is invoked.
 var table = document.getElementById('cart');
+table.style.display = "none";
+
 table.addEventListener('click', removeItemFromCart);
 var cart;
 var tbody = document.getElementsByTagName('tbody')[0];
@@ -34,9 +36,13 @@ function showCart() {
 
   // TODO: Iterate over the items in the cart
   for (var i = 0; i < cart.items.length; i++) {
-    var tableData = document.createElement('tr');
-    tableData.classList.add(i)
+
     if (cart.items[i][0]) {
+      table.style.display = "block";
+
+      var tableData = document.createElement('tr');
+      tableData.classList.add(i)
+
       var td = document.createElement('td');
       td.innerHTML = 'delete'
       tableData.appendChild(td);

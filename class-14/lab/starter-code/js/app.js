@@ -1,21 +1,28 @@
 'use strict';
-// h
+
 // Cart constructor.
 var Cart = function(items) {
   // this.items is an array of CartItem instances.
   this.items = items;
 };
+var allClicked = [];
+Cart.allClicked = JSON.parse(localStorage.getItem('cart')) || [];
 
-Cart.prototype.addItem = function(product, quantity) {
-  // TODO: Fill in this instance method to create a new CartItem and add it to this.items
+Cart.prototype.addItem = function(position, quantity) {
+  this.items = [Product.allProducts[position].name,quantity];
+  Cart.allClicked.push(this.items)
+
+  console.log(this)
 };
 
 Cart.prototype.saveToLocalStorage = function() {
-  // TODO: Fill in this instance method to save the contents of the cart to localStorage
+  localStorage.setItem('cart', JSON.stringify(Cart.allClicked));
+  console.log(Cart.allClicked)
 };
 
 Cart.prototype.removeItem = function(item) {
-  // TODO: Fill in this instance method to remove one item from the cart.
+  // TODO: Fill in this instance method to remove one item from the cart. 
+  this.items.splice(item,1,'');
   // Note: You will have to decide what kind of parameter to pass in here!
 };
 
@@ -28,9 +35,11 @@ var CartItem = function(product, quantity) {
 var Product = function(filePath, name) {
   this.filePath = filePath;
   this.name = name;
+  this.cartItem = [];
   Product.allProducts.push(this);
 };
 Product.allProducts = [];
+
 
 function generateCatalog() {
   new Product('assets/bag.jpg', 'Bag');
@@ -53,6 +62,7 @@ function generateCatalog() {
   new Product('assets/usb.gif', 'USB');
   new Product('assets/water-can.jpg', 'Water Can');
   new Product('assets/wine-glass.jpg', 'Wine Glass');
+  console.log(Product.allProducts[1])
 }
 
 // Initialize the app by creating the big list of products with images and names
